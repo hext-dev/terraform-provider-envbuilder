@@ -10,6 +10,9 @@ replace github.com/GoogleContainerTools/kaniko => github.com/coder/kaniko v0.0.0
 // Required to import codersdk due to gvisor dependency.
 replace tailscale.com => github.com/coder/tailscale v1.1.1-0.20240702054557-aa558fbe5374
 
+// Use hext-dev fork for ARG substitution fix in Dockerfiles.
+replace github.com/coder/envbuilder => github.com/hext-dev/envbuilder v1.2.1
+
 require (
 	github.com/GoogleContainerTools/kaniko v1.9.2
 	github.com/coder/envbuilder v1.1.0
