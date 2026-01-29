@@ -15,21 +15,9 @@ Runtime-only envbuilder changes (e.g., container startup fixes) don't require a 
 
 ## Current Setup
 
-Using dev_overrides to redirect `coder/envbuilder` → local binary:
+Template uses `source = "hext-dev/envbuilder"` directly from the Terraform Registry.
 
-```
-# /home/coder/.terraformrc
-provider_installation {
-  dev_overrides {
-    "coder/envbuilder" = "/home/coder/.terraform.d/plugins"
-  }
-  direct {}
-}
-```
-
-Template still uses `source = "coder/envbuilder"` which gets overridden.
-
-**To switch to registry instead:** Remove dev_overrides, change template source to `hext-dev/envbuilder`, run `terraform init -upgrade`.
+No dev_overrides needed - `/home/coder/.terraformrc` just has `provider_installation { direct {} }`.
 
 ## Release
 
@@ -37,12 +25,9 @@ Template still uses `source = "coder/envbuilder"` which gets overridden.
 # Update go.mod replace directive, then:
 go mod tidy && git commit -am "bump envbuilder" && git push
 git tag v1.0.X && git push origin v1.0.X  # GitHub Actions handles release
-
-# Update local binary
-cd /tmp && gh release download v1.0.X -R hext-dev/terraform-provider-envbuilder -p '*linux_amd64*'
-unzip -o terraform-provider-envbuilder_*.zip
-sudo cp terraform-provider-envbuilder_v1.0.X /home/coder/.terraform.d/plugins/
 ```
+
+GPG key: `C1469A531E975F1C` (terraform@hext.dev)
 
 ## Debug
 
